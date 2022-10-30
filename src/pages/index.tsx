@@ -9,10 +9,6 @@ import React from "react";
 
 // TODO: globalsettings wireup
 // TODO: fix webpack caching issue
-// TODO: fix detail page routing issue
-// TODO: consider refactoring for apollo codegen
-// TODO: refactor any types
-// TODO: fix card height not flowing
 
 export default function Index({
     content: mainCopy,
@@ -21,7 +17,7 @@ export default function Index({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
         <>
-            <HtmlHead pageTitle={page.title} meta={page.seo} />
+            <HtmlHead pageTitle="Home" meta={page.seo} />
             <Container sx={{ marginTop: 5 }}>
                 <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     <Grid xs={12} sm={12}>
@@ -37,18 +33,19 @@ export default function Index({
                             </MainContent>
                         </Item>
                     </Grid>
-                    {dogs.map((i: any) => {
-                        const uid = i.system.uid;
-                        return (
-                            <React.Fragment key={uid}>
-                                <Grid xs={4} sm={4} key={`g-${uid}`}>
-                                    <Item key={`i-${uid}`}>
-                                        <DogSummaryCard dog={i} key={`d-${uid}`} />
-                                    </Item>
-                                </Grid>
-                            </React.Fragment>
-                        );
-                    })}
+                    {dogs &&
+                        dogs.map((i: any) => {
+                            const uid = i.system.uid;
+                            return (
+                                <React.Fragment key={uid}>
+                                    <Grid xs={4} sm={4} key={`g-${uid}`}>
+                                        <Item key={`i-${uid}`}>
+                                            <DogSummaryCard dog={i} key={`d-${uid}`} />
+                                        </Item>
+                                    </Grid>
+                                </React.Fragment>
+                            );
+                        })}
                 </Grid>
             </Container>
         </>

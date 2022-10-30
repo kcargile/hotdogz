@@ -21,8 +21,8 @@ export const GlobalFooter: FC<IGlobalFooterProps> = ({ attribution, children, co
                 paddingBottom: 10,
                 paddingTop: 3,
                 textAlign: "center",
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10
+                borderTopLeftRadius: 7,
+                borderTopRightRadius: 7
             }}
         >
             <footer>
