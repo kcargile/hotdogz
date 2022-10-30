@@ -1,0 +1,5 @@
+{
+	"extends": "@openendurance/eslint-config/tsconfig.eslint.json",
+	"include": ["packages/*"]
+}
+
