@@ -1,6 +1,5 @@
 import { DogSummaryCard } from "@components/DogSummaryCard/DogSummaryCard";
 import { HtmlHead } from "@components/HtmlHead/HtmlHead";
-import { Loading } from "@components/Loading/Loading";
 import { MainContent } from "@components/MainContent/MainContent";
 import { IFetchHotdogsPageResult, query } from "@core/graphql/operations/FetchHotdogsPage";
 import Container from "@mui/material/Container";
@@ -11,15 +10,15 @@ import React from "react";
 // TODO: globalsettings wireup
 // TODO: fix webpack caching issue
 // TODO: fix detail page routing issue
+// TODO: consider refactoring for apollo codegen
+// TODO: refactor any types
+// TODO: fix card height not flowing
 
 export default function Index({
     content: mainCopy,
     dogs,
-    loading,
     page
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    if (loading) return <Loading />;
-
     return (
         <>
             <HtmlHead pageTitle={page.title} meta={page.seo} />
@@ -47,11 +46,6 @@ export default function Index({
                                         <DogSummaryCard dog={i} key={`d-${uid}`} />
                                     </Item>
                                 </Grid>
-                                <Grid xs={4} sm={4} key={`g-${uid}-2`}>
-                                    <Item key={`i-${uid}-2`}>
-                                        <DogSummaryCard dog={i} key={`d-${uid}-2`} />
-                                    </Item>
-                                </Grid>
                             </React.Fragment>
                         );
                     })}
@@ -61,13 +55,12 @@ export default function Index({
     );
 }
 
-export const getServerSideProps: GetServerSideProps<IFetchHotdogsPageResult> = async () => {
-    const { content, dogs, loading, page } = await query();
+export const getServerSideProps: GetServerSideProps<Partial<IFetchHotdogsPageResult>> = async () => {
+    const { content, dogs, page } = await query();
     return {
         props: {
             content,
             dogs,
-            loading,
             page
         }
     };

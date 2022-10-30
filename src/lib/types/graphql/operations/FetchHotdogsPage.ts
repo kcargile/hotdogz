@@ -102,7 +102,7 @@ export interface IFetchHotdogsPageResult {
     dogs: any[];
     content?: IHtmlContentFragment;
     loading: boolean;
-    page: any;
+    page?: any;
 }
 
 export const query = async (): Promise<IFetchHotdogsPageResult> => {
