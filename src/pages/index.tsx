@@ -1,23 +1,26 @@
 import { DogSummaryCard } from "@components/DogSummaryCard/DogSummaryCard";
 import { HtmlHead } from "@components/HtmlHead/HtmlHead";
+import { InjectGlobalSettingsContext } from "@components/InjectGlobalSettingsContext/InjectGlobalSettingsContext";
+import { Loading } from "@components/Loading/Loading";
 import { MainContent } from "@components/MainContent/MainContent";
-import { IFetchHotdogsPageResult, query } from "@core/graphql/operations/FetchHotdogsPage";
+import { IFetchHotdogsPageResult, query } from "@core/graphql/operations/FetchHomePage";
 import Container from "@mui/material/Container";
 import { default as Grid, default as Item } from "@mui/material/Unstable_Grid2";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import React from "react";
 
-// TODO: globalsettings wireup
-// TODO: fix webpack caching issue
-
 export default function Index({
     content: mainCopy,
     dogs,
-    page
+    loading,
+    page,
+    settings
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    if (loading) return <Loading loading />;
     return (
         <>
             <HtmlHead pageTitle="Home" meta={page.seo} />
+            <InjectGlobalSettingsContext {...settings} />
             <Container sx={{ marginTop: 5 }}>
                 <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     <Grid xs={12} sm={12}>
@@ -52,13 +55,15 @@ export default function Index({
     );
 }
 
-export const getServerSideProps: GetServerSideProps<Partial<IFetchHotdogsPageResult>> = async () => {
-    const { content, dogs, page } = await query();
+export const getServerSideProps: GetServerSideProps<Partial<IFetchHotdogsPageResult>> = async (context) => {
+    const { content, dogs, loading, page, settings } = await query(context.resolvedUrl);
     return {
         props: {
             content,
             dogs,
-            page
+            loading,
+            page,
+            settings
         }
     };
 };

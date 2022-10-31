@@ -16,6 +16,7 @@ export const HtmlHead: FC<IHtmlHeadProps> = ({ meta, pageTitle }) => {
             <title>{`${pageTitle || PAGE_FALLBACK_TITLE} | ${siteTitle || SITE_FALLBACK_TITLE}`}</title>
             <meta name="description" content={meta?.description} />
             <meta name="title" content={meta?.title} />
+            <meta name="hd:version" content={process.env.NEXT_PUBLIC_APP_VERSION || "K.7.C"} />
             {meta?.canonical && meta.canonical.href && <link rel="canonical" href={meta.canonical.href} />}
             {meta?.noindex && <meta name="robots" content="noindex" />}
             {meta?.nofollow && <meta name="robots" content="noindex" />}

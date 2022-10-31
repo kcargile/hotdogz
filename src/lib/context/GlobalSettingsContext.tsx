@@ -9,7 +9,7 @@ import {
     SITE_FALLBACK_TITLE
 } from "@theme/Constants";
 import React, { FC, useState } from "react";
-import { IGlobalSettings } from "./IGlobalSettings";
+import { GlobalSettings } from "./GlobalSettings";
 import { IGlobalSettingsContext } from "./IGlobalSettingsContext";
 
 const defaultState = {
@@ -18,6 +18,7 @@ const defaultState = {
         copyright: SITE_FALLBACK_COPYRIGHT,
         fallbackMysteryImageUrl: DOG_FALLBACK_IMAGE_URL,
         faviconUrl: SITE_FALLBACK_FAVICON_URL,
+        hideFooter: false,
         siteLogoUrl: SITE_FALLBACK_LOGO_URL,
         siteTitle: SITE_FALLBACK_TITLE
     }
@@ -26,7 +27,7 @@ const defaultState = {
 export const GlobalSettingsContext = React.createContext<IGlobalSettingsContext>(defaultState);
 export const GlobalSettingsContextProvider: FC<any> = ({ children }) => {
     const [settings, setSettings] = useState(defaultState.settings);
-    const updateSettings = (s: IGlobalSettings) => {
+    const updateSettings = (s: GlobalSettings) => {
         setSettings(s);
     };
 

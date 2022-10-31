@@ -19,13 +19,7 @@ export const GlobalHeader: FC<IGlobalHeaderProps> = ({ siteTitle, siteLogoUrl })
     return (
         <AppBar position="static">
             <Toolbar>
-                {!siteLogoUrl ? (
-                    <Avatar variant="square" src={siteLogoUrl} />
-                ) : (
-                    <Avatar variant="square" sx={{ backgroundColor: "transparent" }}>
-                        <WhatshotIcon fontSize="large" sx={{ color: theme.status.failed, verticalAlign: "middle" }} />
-                    </Avatar>
-                )}
+                <WhatshotIcon fontSize="large" sx={{ color: theme.status.failed, verticalAlign: "middle" }} />
                 <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                     {siteTitle}
                 </Typography>

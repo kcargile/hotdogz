@@ -8,9 +8,9 @@ export default function Dog() {
         <Container>
             <HtmlHead pageTitle="Fetching Profile..." />
             <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                <Grid xs={4} sm={4}>
+                <Grid xs={12} sm={12}>
                     <Item>
-                        <Loading />
+                        <Loading loading={true} />
                     </Item>
                 </Grid>
             </Grid>

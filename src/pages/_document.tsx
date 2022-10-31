@@ -9,7 +9,7 @@ export default function Document() {
     return (
         <Html lang="en-us">
             <Head>
-                <meta name="application-name" content="Doggiedating.dev" />
+                <meta name="application-name" content="doggiedating.dev" />
                 <meta charSet="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <link rel="icon" href={faviconUrl || SITE_FALLBACK_FAVICON_URL} />

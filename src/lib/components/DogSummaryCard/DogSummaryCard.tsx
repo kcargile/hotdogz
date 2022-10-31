@@ -105,7 +105,7 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
                 <CardContent>
                     <Box>
                         <Box component="span" sx={{ margin: 0.5 }}>
-                            <Tooltip title={vaxed ? "Vaccinated!" : "Watch out!"} arrow>
+                            <Tooltip title={vaxed ? "Vaccinated!" : "Bring a mask!"} arrow>
                                 <VaccinesIconRounded
                                     sx={{
                                         bgcolor: !vaxed ? theme.status.danger : theme.status.likes
@@ -130,16 +130,18 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
                 </CardContent>
                 <CardActions sx={{ marginTop: "auto", bgcolor: "rgba(0, 0, 0, 0.08)" }}>
                     <Link href={dog.url} underline="hover">
-                        <Button size="small">
+                        <Button size="small" sx={{ color: theme.palette.primary.dark }}>
                             Buttsniff&apos;m
                             <KeyboardDoubleArrowRightRoundedIcon fontSize="small" />
                         </Button>
                     </Link>
                     <Button size="small" sx={{ color: theme.status.danger, marginLeft: "auto" }}>
-                        It&apos;s a Kat! <ReportIcon fontSize="small" />
+                        Report a Kat <ReportIcon fontSize="small" />
                     </Button>
                 </CardActions>
             </Card>
         </>
     );
 };
+
+export default DogSummaryCard;

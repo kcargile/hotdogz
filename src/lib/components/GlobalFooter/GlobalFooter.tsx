@@ -1,7 +1,8 @@
+import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
 import Container from "@mui/material/Container";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useContext, useEffect, useState } from "react";
 
 interface IGlobalFooterProps {
     attribution: string;
@@ -11,6 +12,13 @@ interface IGlobalFooterProps {
 
 export const GlobalFooter: FC<IGlobalFooterProps> = ({ attribution, children, copyright }) => {
     const theme = useTheme();
+    const [visible, setVisible] = useState(true);
+    const { hideFooter } = useContext(GlobalSettingsContext).settings;
+
+    useEffect(() => setVisible(!hideFooter), [hideFooter]);
+
+    if (!visible) return <></>;
+
     return (
         <Container
             sx={{
