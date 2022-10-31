@@ -11,6 +11,5 @@ const nextConfig = {
         ]
     }
 };
-console.log("images");
-console.log(nextConfig.images);
+
 module.exports = nextConfig;

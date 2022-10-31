@@ -3,7 +3,7 @@ import { GlobalSettings } from "@context/GlobalSettings";
 import { IHtmlContentFragment } from "@core/IHtmlContentFragment";
 import { GraphQLClClient } from "../../GraphQLClient";
 
-const FETCH_HOMEPAGE = gql`
+export const FETCH_HOMEPAGE = gql`
     query FetchAllDogsPage($url: String!) {
         settings: all_global_settings {
             total
@@ -127,6 +127,10 @@ const FETCH_HOMEPAGE = gql`
                                                         description
                                                         metadata
                                                         unique_identifier
+                                                        dimension {
+                                                            height
+                                                            width
+                                                        }
                                                     }
                                                 }
                                                 totalCount
@@ -149,6 +153,8 @@ const FETCH_HOMEPAGE = gql`
         }
     }
 `;
+
+export default FETCH_HOMEPAGE;
 
 export interface IFetchHotdogsPageResult {
     dogs: any[];

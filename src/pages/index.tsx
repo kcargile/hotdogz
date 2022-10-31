@@ -9,6 +9,9 @@ import { default as Grid, default as Item } from "@mui/material/Unstable_Grid2";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import React from "react";
 
+// TODO: fixup package file
+// TODO: fix breakpoint shit in grid
+
 export default function Index({
     content: mainCopy,
     dogs,
@@ -17,6 +20,7 @@ export default function Index({
     settings
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     if (loading) return <Loading loading />;
+
     return (
         <>
             <HtmlHead pageTitle="Home" meta={page.seo} />

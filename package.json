@@ -7,6 +7,9 @@
         "root": true,
         "extends": "@openendurance/eslint-config"
     },
+    "engines": {
+        "node": ">=17.0.0"
+    },
     "scripts": {
         "dev": "next dev",
         "build": "next build",
@@ -39,6 +42,7 @@
         "@types/react-dom": "18.0.7",
         "eslint": "8.26.0",
         "eslint-config-next": "13.0.0",
+        "mini-css-extract-plugin": "^2.6.1",
         "prettier": "^2.7.1",
         "typescript": "4.8.4"
     }

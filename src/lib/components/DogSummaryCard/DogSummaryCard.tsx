@@ -69,19 +69,33 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
         );
     });
 
+    const photo = dog.photoConnection?.edges?.[0].node;
+
     return (
         <>
             <Card variant="outlined" sx={{ display: "flex", flexDirection: "column" }}>
                 <Box sx={{ position: "relative" }}>
-                    <CardMedia>
-                        <div style={{ position: "relative", width: "380px", height: "380px" }}>
-                            <Image
-                                fill
-                                object-fit="contain"
-                                alt={dog.title}
-                                src={dog.photoConnection?.edges?.[0].node.url || fallbackMysteryImageUrl}
-                            />
-                        </div>
+                    <CardMedia
+                        sx={{
+                            position: "relative",
+                            width: photo.dimension.width / 2,
+                            height: photo.dimension.width / 2
+                        }}
+                    >
+                        {/* <div
+                            style={{
+                                position: "relative",
+                                width: photo.dimension.width / 2,
+                                height: photo.dimension.width / 2
+                            }}
+                        > */}
+                        <Image
+                            fill
+                            object-fit="cover"
+                            alt={dog.title}
+                            src={dog.photoConnection?.edges?.[0].node.url || fallbackMysteryImageUrl}
+                        />
+                        {/* </div> */}
                     </CardMedia>
                     <Box
                         sx={{
