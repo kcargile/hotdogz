@@ -1,5 +1,5 @@
-import { HtmlHead } from "@components/HtmlHead/HtmlHead";
-import { Loading } from "@components/Loading/Loading";
+import HtmlHead from "@components/HtmlHead";
+import Loading from "@components/Loading";
 import Container from "@mui/material/Container";
 import { default as Grid, default as Item } from "@mui/material/Unstable_Grid2";
 

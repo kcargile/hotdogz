@@ -1,8 +1,8 @@
-import { DogSummaryCard } from "@components/DogSummaryCard/DogSummaryCard";
-import { HtmlHead } from "@components/HtmlHead/HtmlHead";
-import { InjectGlobalSettingsContext } from "@components/InjectGlobalSettingsContext/InjectGlobalSettingsContext";
-import { Loading } from "@components/Loading/Loading";
-import { MainContent } from "@components/MainContent/MainContent";
+import DogSummaryCard from "@components/DogSummaryCard";
+import HtmlHead from "@components/HtmlHead";
+import InjectGlobalSettingsContext from "@components/InjectGlobalSettingsContext";
+import Loading from "@components/Loading";
+import MainContent from "@components/MainContent";
 import { IFetchHotdogsPageResult, query } from "@core/graphql/operations/FetchHomePage";
 import Container from "@mui/material/Container";
 import { default as Grid, default as Item } from "@mui/material/Unstable_Grid2";

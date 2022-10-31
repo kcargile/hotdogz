@@ -1,4 +1,4 @@
-import { GlobalLayout } from "@components/GlobalLayout/GlobalLayout";
+import GlobalLayout from "@components/GlobalLayout";
 import { GlobalSettingsContextProvider } from "@context/GlobalSettingsContext";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";

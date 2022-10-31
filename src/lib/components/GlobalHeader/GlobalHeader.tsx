@@ -1,4 +1,4 @@
-import { GlobalNavigation } from "@components/GlobalNavigation/GlobalNavigation";
+import GlobalNavigation from "@components/GlobalNavigation";
 import PetsIcon from "@mui/icons-material/Pets";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import AppBar from "@mui/material/AppBar";

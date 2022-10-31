@@ -1,7 +1,7 @@
 "use client";
 
-import { GlobalFooter } from "@components/GlobalFooter/GlobalFooter";
-import { GlobalHeader } from "@components/GlobalHeader/GlobalHeader";
+import GlobalFooter from "@components/GlobalFooter";
+import GlobalHeader from "@components/GlobalHeader";
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@theme/Theme";
