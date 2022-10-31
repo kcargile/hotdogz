@@ -16,3 +16,5 @@ export const GlobalNavigation: FC = () => {
         </List>
     );
 };
+
+export default GlobalNavigation;

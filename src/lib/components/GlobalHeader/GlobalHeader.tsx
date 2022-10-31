@@ -31,3 +31,5 @@ export const GlobalHeader: FC<IGlobalHeaderProps> = ({ siteTitle, siteLogoUrl })
         </AppBar>
     );
 };
+
+export default GlobalHeader;

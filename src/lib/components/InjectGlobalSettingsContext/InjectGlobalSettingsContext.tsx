@@ -26,3 +26,5 @@ export const InjectGlobalSettingsContext: FC<IInjectGlobalSettingsContext> = (se
         </Head>
     );
 };
+
+export default InjectGlobalSettingsContext;

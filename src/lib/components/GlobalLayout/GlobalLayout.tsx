@@ -21,3 +21,5 @@ export const GlobalLayout: FC<IGlobalLayoutProps> = ({ children }) => {
         </ThemeProvider>
     );
 };
+
+export default GlobalLayout;

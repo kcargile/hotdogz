@@ -23,3 +23,5 @@ export const HtmlHead: FC<IHtmlHeadProps> = ({ meta, pageTitle }) => {
         </Head>
     );
 };
+
+export default HtmlHead;

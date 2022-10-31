@@ -28,3 +28,5 @@ export const Loading: FC<ILoadingProps> = ({ children, loading }) => {
         </>
     );
 };
+
+export default Loading;

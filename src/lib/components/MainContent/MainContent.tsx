@@ -14,3 +14,5 @@ export const MainContent: FC<IMainContentProps> = ({ children, title }) => {
         </>
     );
 };
+
+export default MainContent;

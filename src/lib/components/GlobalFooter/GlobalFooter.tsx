@@ -43,3 +43,5 @@ export const GlobalFooter: FC<IGlobalFooterProps> = ({ attribution, children, co
         </Container>
     );
 };
+
+export default GlobalFooter;
