@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { GlobalSettings } from "@context/GlobalSettings";
 import { IHtmlContentFragment } from "@core/IHtmlContentFragment";
-import { GraphQLClClient } from "../GraphQLClient";
+import { GraphQLClClient } from "../../GraphQLClient";
 
 const FETCH_HOMEPAGE = gql`
     query FetchAllDogsPage($url: String!) {

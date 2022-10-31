@@ -3,7 +3,7 @@ import HtmlHead from "@components/HtmlHead";
 import InjectGlobalSettingsContext from "@components/InjectGlobalSettingsContext";
 import Loading from "@components/Loading";
 import MainContent from "@components/MainContent";
-import { IFetchHotdogsPageResult, query } from "@core/graphql/operations/FetchHomePage";
+import { IFetchHotdogsPageResult, query } from "@core/graphql/operations/FetchHomePage/FetchHomePage";
 import Container from "@mui/material/Container";
 import { default as Grid, default as Item } from "@mui/material/Unstable_Grid2";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";

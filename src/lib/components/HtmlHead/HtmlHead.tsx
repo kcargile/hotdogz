@@ -2,14 +2,15 @@ import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
 import { ISeoMeta } from "@core/ISeoMeta";
 import { PAGE_FALLBACK_TITLE, SITE_FALLBACK_TITLE } from "@theme/Constants";
 import Head from "next/head";
-import { FC, useContext } from "react";
+import { FC, ReactNode, useContext } from "react";
 
 interface IHtmlHeadProps {
+    children?: ReactNode;
     meta?: ISeoMeta;
     pageTitle?: string;
 }
 
-export const HtmlHead: FC<IHtmlHeadProps> = ({ meta, pageTitle }) => {
+export const HtmlHead: FC<IHtmlHeadProps> = ({ children, meta, pageTitle }) => {
     const { siteTitle } = useContext(GlobalSettingsContext).settings;
     return (
         <Head>
@@ -20,6 +21,7 @@ export const HtmlHead: FC<IHtmlHeadProps> = ({ meta, pageTitle }) => {
             {meta?.canonical && meta.canonical.href && <link rel="canonical" href={meta.canonical.href} />}
             {meta?.noindex && <meta name="robots" content="noindex" />}
             {meta?.nofollow && <meta name="robots" content="noindex" />}
+            {children}
         </Head>
     );
 };
