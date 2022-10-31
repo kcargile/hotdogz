@@ -74,14 +74,14 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
             <Card variant="outlined" sx={{ display: "flex", flexDirection: "column" }}>
                 <Box sx={{ position: "relative" }}>
                     <CardMedia>
-                        {/* <div style={{ position: "relative", width: "100%", height: "100%" }}> */}
-                        <Image
-                            width={300}
-                            height={300}
-                            alt={dog.title}
-                            src={dog.photoConnection?.edges?.[0].node.url || fallbackMysteryImageUrl}
-                        />
-                        {/* </div> */}
+                        <div style={{ position: "relative", width: "380px", height: "380px" }}>
+                            <Image
+                                fill
+                                object-fit="contain"
+                                alt={dog.title}
+                                src={dog.photoConnection?.edges?.[0].node.url || fallbackMysteryImageUrl}
+                            />
+                        </div>
                     </CardMedia>
                     <Box
                         sx={{
