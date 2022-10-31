@@ -12,6 +12,8 @@ export const InjectGlobalSettingsContext: FC<IInjectGlobalSettingsContext> = (se
     useEffect(() => {
         if (context.updateSettings) {
             context.updateSettings(settings as GlobalSettings);
+
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             didUpdate = true;
         }
     }, [context]);
