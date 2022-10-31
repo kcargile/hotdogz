@@ -6,12 +6,11 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "images.contentstack.io",
-                port: "443",
-                pathname: `/*/assets/${process.env.CONTENTSTACK_API_KEY}/**`
+                hostname: "images.contentstack.io"
             }
         ]
     }
 };
-
+console.log("images");
+console.log(nextConfig.images);
 module.exports = nextConfig;

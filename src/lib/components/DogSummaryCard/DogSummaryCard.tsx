@@ -22,6 +22,7 @@ import Rating from "@mui/material/Rating";
 import { useTheme } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import { FC, useContext } from "react";
 
 interface IDogSummaryCardProps {
@@ -72,12 +73,16 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
         <>
             <Card variant="outlined" sx={{ display: "flex", flexDirection: "column" }}>
                 <Box sx={{ position: "relative" }}>
-                    <CardMedia
-                        component="img"
-                        height="300"
-                        image={dog.photoConnection?.edges?.[0].node.url || fallbackMysteryImageUrl}
-                        alt={dog.title}
-                    />
+                    <CardMedia>
+                        {/* <div style={{ position: "relative", width: "100%", height: "100%" }}> */}
+                        <Image
+                            width={300}
+                            height={300}
+                            alt={dog.title}
+                            src={dog.photoConnection?.edges?.[0].node.url || fallbackMysteryImageUrl}
+                        />
+                        {/* </div> */}
+                    </CardMedia>
                     <Box
                         sx={{
                             position: "absolute",
