@@ -13,9 +13,6 @@
         "root": true,
         "extends": "@openendurance/eslint-config"
     },
-    "engines": {
-        "node": ">=17.0.0"
-    },
     "scripts": {
         "build": "next build",
         "codegen": "graphql-codegen --require dotenv/config --config codegen.ts dotenv_config_path=.env.local",
