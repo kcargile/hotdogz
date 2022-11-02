@@ -38,8 +38,5 @@ next-env.d.ts
 # ide
 .vscode
 
-# geneated gql output
-**/__generated__
-
 # dumpster fire
 .old
