@@ -1,4 +1,0 @@
-fragment AssetSystemFields on SysAssetSystemField {
-    created_at
-    uid
-}
