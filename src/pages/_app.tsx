@@ -1,4 +1,4 @@
-import GlobalLayout from "@components/GlobalLayout";
+import Root from "@components/layout/Root";
 import { GlobalSettingsContextProvider } from "@context/GlobalSettingsContext";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -11,12 +11,12 @@ import Head from "next/head";
 export default function App({ Component, pageProps }: AppProps) {
     return (
         <GlobalSettingsContextProvider>
-            <Head>
-                <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1" />
-            </Head>
-            <GlobalLayout>
+            <Root>
+                <Head>
+                    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1" />
+                </Head>
                 <Component {...pageProps} />
-            </GlobalLayout>
+            </Root>
         </GlobalSettingsContextProvider>
     );
 }

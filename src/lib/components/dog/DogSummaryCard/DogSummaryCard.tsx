@@ -1,4 +1,5 @@
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
+import { Dog } from "@core/graphql/__generated__/graphql";
 import { tryCalculateAge } from "@core/util/DateTimeUtil";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
@@ -26,7 +27,7 @@ import Image from "next/image";
 import { FC, useContext } from "react";
 
 interface IDogSummaryCardProps {
-    dog: any;
+    dog: Dog;
 }
 
 export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
@@ -34,69 +35,72 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
     const { fallbackMysteryImageUrl } = useContext(GlobalSettingsContext).settings;
 
     const vaxed = dog.vax_status === "Vaccinated";
-    const chips = dog.seeking.map((i: string) => {
-        return (
-            <Chip
-                icon={<VisibilityIcon fontSize="small" />}
-                label={i}
-                key={i}
-                size="small"
-                sx={{ marginTop: 1, marginRight: 1 }}
-            />
-        );
-    });
+    const chips: JSX.Element[] = [];
+    dog.seeking &&
+        dog.seeking.map((i) => {
+            chips.push(
+                <Chip
+                    icon={<VisibilityIcon fontSize="small" />}
+                    label={i}
+                    key={i}
+                    size="small"
+                    sx={{ marginTop: 1, marginRight: 1 }}
+                />
+            );
+        });
 
-    dog.likes.map((i: string) => {
-        chips.push(
-            <Chip
-                icon={<CheckRoundedIcon fontSize="small" />}
-                label={i}
-                key={i}
-                size="small"
-                sx={{ bgcolor: theme.status.likes, marginTop: 1, marginRight: 1 }}
-            />
-        );
-    });
-    dog.dislikes.map((i: string) => {
-        chips.push(
-            <Chip
-                icon={<NotInterestedIcon fontSize="small" />}
-                label={i}
-                key={i}
-                size="small"
-                sx={{ bgcolor: theme.status.dislike, marginTop: 1, marginRight: 1 }}
-            />
-        );
-    });
+    dog.likes &&
+        dog.likes.map((i) => {
+            chips.push(
+                <Chip
+                    icon={<CheckRoundedIcon fontSize="small" />}
+                    label={i}
+                    key={i}
+                    size="small"
+                    sx={{ bgcolor: theme.status.likes, marginTop: 1, marginRight: 1 }}
+                />
+            );
+        });
+    dog.dislikes &&
+        dog.dislikes.map((i) => {
+            chips.push(
+                <Chip
+                    icon={<NotInterestedIcon fontSize="small" />}
+                    label={i}
+                    key={i}
+                    size="small"
+                    sx={{ bgcolor: theme.status.dislike, marginTop: 1, marginRight: 1 }}
+                />
+            );
+        });
 
-    const photo = dog.photoConnection?.edges?.[0].node;
+    const photo = dog.photoConnection?.edges?.[0]?.node || undefined;
+    const width = (photo && photo.dimension?.width) || 0;
+    const height = (photo && photo.dimension?.height) || 0;
+    const url = (photo && photo.url) || fallbackMysteryImageUrl;
+    const color = dog.favorite_color?.toLowerCase() || undefined;
 
     return (
         <>
             <Card variant="outlined" sx={{ display: "flex", flexDirection: "column" }}>
                 <Box sx={{ position: "relative" }}>
-                    <CardMedia
-                        sx={{
-                            position: "relative",
-                            width: photo.dimension.width / 2,
-                            height: photo.dimension.width / 2
-                        }}
-                    >
-                        {/* <div
-                            style={{
+                    {photo && (
+                        <CardMedia
+                            sx={{
                                 position: "relative",
-                                width: photo.dimension.width / 2,
-                                height: photo.dimension.width / 2
+                                width: width / 2,
+                                height: height / 2
                             }}
-                        > */}
-                        <Image
-                            fill
-                            object-fit="cover"
-                            alt={dog.title}
-                            src={dog.photoConnection?.edges?.[0].node.url || fallbackMysteryImageUrl}
-                        />
-                        {/* </div> */}
-                    </CardMedia>
+                        >
+                            <Image
+                                fill
+                                object-fit="cover"
+                                alt={dog.title || "Cute dog"}
+                                src={url}
+                                sizes="(max-width: 378px) 100vw"
+                            />
+                        </CardMedia>
+                    )}
                     <Box
                         sx={{
                             position: "absolute",
@@ -140,15 +144,17 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
                             </Tooltip>
                         </Box>
                         <Box component="span" sx={{ margin: 0.5 }}>
-                            <Tooltip title={`My favorite color is ${dog.favorite_color.toLowerCase()}.`} arrow>
-                                <ColorLensIcon sx={{ color: "white", bgcolor: dog.favorite_color }} />
-                            </Tooltip>
+                            {color && (
+                                <Tooltip title={`My favorite color is ${color}.`} arrow>
+                                    <ColorLensIcon sx={{ color: "white", bgcolor: dog.favorite_color }} />
+                                </Tooltip>
+                            )}
                         </Box>
                     </Box>
                     <Box>{chips}</Box>
                 </CardContent>
                 <CardActions sx={{ marginTop: "auto", bgcolor: "rgba(0, 0, 0, 0.08)" }}>
-                    <Link href={dog.url} underline="hover">
+                    <Link href={dog.url || "#"} underline="hover">
                         <Button size="small" sx={{ color: theme.palette.primary.dark }}>
                             Buttsniff&apos;m
                             <KeyboardDoubleArrowRightRoundedIcon fontSize="small" />

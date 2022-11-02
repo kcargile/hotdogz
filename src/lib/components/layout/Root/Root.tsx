@@ -1,25 +1,25 @@
 "use client";
 
-import GlobalFooter from "@components/GlobalFooter";
-import GlobalHeader from "@components/GlobalHeader";
+import Footer from "@components/layout/Footer";
+import Header from "@components/layout/Header";
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@theme/Theme";
 import { FC, ReactNode, useContext } from "react";
 
-interface IGlobalLayoutProps {
+interface IRootLayoutProps {
     children?: ReactNode;
 }
 
-export const GlobalLayout: FC<IGlobalLayoutProps> = ({ children }) => {
+export const Root: FC<IRootLayoutProps> = ({ children }) => {
     const { attribution, copyright, siteTitle, siteLogoUrl } = useContext(GlobalSettingsContext).settings;
     return (
         <ThemeProvider theme={theme}>
-            <GlobalHeader siteTitle={siteTitle} siteLogoUrl={siteLogoUrl} />
+            <Header siteTitle={siteTitle} siteLogoUrl={siteLogoUrl} />
             {children}
-            <GlobalFooter attribution={attribution} copyright={copyright} />
+            <Footer attribution={attribution} copyright={copyright} />
         </ThemeProvider>
     );
 };
 
-export default GlobalLayout;
+export default Root;

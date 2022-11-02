@@ -2,9 +2,11 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import { FC } from "react";
 
-// TODO: wire this up to CMS
+// TODO: wire this up to CMS data
 
-export const GlobalNavigation: FC = () => {
+interface INavigationProps {}
+
+export const Navigation: FC<INavigationProps> = () => {
     const navItems = ["FAQ", "Login"];
     return (
         <List>
@@ -17,4 +19,4 @@ export const GlobalNavigation: FC = () => {
     );
 };
 
-export default GlobalNavigation;
+export default Navigation;

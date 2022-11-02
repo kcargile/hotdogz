@@ -1,0 +1,37 @@
+fragment DogFields on Dog {
+    title
+    url
+    bio
+    birthday
+    breed
+    dislikes
+    favorite_color
+    good_fetch_rating
+    likes
+    seeking
+    spayed_neutered
+    vax_status
+    photoConnection {
+        edges {
+            node {
+                content_type
+                description
+                dimension {
+                    height
+                    width
+                }
+                system {
+                    created_at
+                    uid
+                }
+                title
+                url
+            }
+        }
+        totalCount
+    }
+    system {
+        created_at
+        uid
+    }
+}

@@ -1,23 +1,25 @@
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
-import { ISeoMeta } from "@core/ISeoMeta";
+import { Seo } from "@core/graphql/__generated__/graphql";
 import { PAGE_FALLBACK_TITLE, SITE_FALLBACK_TITLE } from "@theme/Constants";
 import Head from "next/head";
 import { FC, ReactNode, useContext } from "react";
 
 interface IHtmlHeadProps {
     children?: ReactNode;
-    meta?: ISeoMeta;
-    pageTitle?: string;
+    gsup?: boolean;
+    meta?: Seo;
+    title?: string;
 }
 
-export const HtmlHead: FC<IHtmlHeadProps> = ({ children, meta, pageTitle }) => {
+export const HtmlHead: FC<IHtmlHeadProps> = ({ children, gsup, meta, title }) => {
     const { siteTitle } = useContext(GlobalSettingsContext).settings;
     return (
         <Head>
-            <title>{`${pageTitle || PAGE_FALLBACK_TITLE} | ${siteTitle || SITE_FALLBACK_TITLE}`}</title>
-            <meta name="description" content={meta?.description} />
-            <meta name="title" content={meta?.title} />
+            <title>{`${title || PAGE_FALLBACK_TITLE} | ${siteTitle || SITE_FALLBACK_TITLE}`}</title>
             <meta name="hd:version" content={process.env.NEXT_PUBLIC_APP_VERSION || "K.7.C"} />
+            <meta name="hd:❗" content="Nobody expects the Spanish Inquisition!" />
+            {meta?.description && <meta name="description" content={meta.description} />}
+            {meta?.title && <meta name="title" content={meta.title} />}
             {meta?.canonical && meta.canonical.href && <link rel="canonical" href={meta.canonical.href} />}
             {meta?.noindex && <meta name="robots" content="noindex" />}
             {meta?.nofollow && <meta name="robots" content="noindex" />}

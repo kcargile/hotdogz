@@ -27,8 +27,8 @@ const defaultState = {
 export const GlobalSettingsContext = React.createContext<IGlobalSettingsContext>(defaultState);
 export const GlobalSettingsContextProvider: FC<any> = ({ children }) => {
     const [settings, setSettings] = useState(defaultState.settings);
-    const updateSettings = (s: GlobalSettings) => {
-        setSettings(s);
+    const updateSettings = (s?: GlobalSettings) => {
+        s && setSettings(s);
     };
 
     return (

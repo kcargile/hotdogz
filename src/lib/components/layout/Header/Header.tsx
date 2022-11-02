@@ -1,4 +1,4 @@
-import GlobalNavigation from "@components/GlobalNavigation";
+import Navigation from "@components/layout/Navigation";
 import PetsIcon from "@mui/icons-material/Pets";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import AppBar from "@mui/material/AppBar";
@@ -8,12 +8,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { FC } from "react";
 
-interface IGlobalHeaderProps {
+interface IHeaderProps {
     siteTitle: string;
     siteLogoUrl?: string;
 }
 
-export const GlobalHeader: FC<IGlobalHeaderProps> = ({ siteTitle, siteLogoUrl }) => {
+export const Header: FC<IHeaderProps> = ({ siteTitle, siteLogoUrl }) => {
     const theme = useTheme();
 
     return (
@@ -23,7 +23,7 @@ export const GlobalHeader: FC<IGlobalHeaderProps> = ({ siteTitle, siteLogoUrl })
                 <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                     {siteTitle}
                 </Typography>
-                <GlobalNavigation />
+                <Navigation />
                 <Avatar sx={{ marginLeft: 2 }}>
                     <PetsIcon />
                 </Avatar>
@@ -32,4 +32,4 @@ export const GlobalHeader: FC<IGlobalHeaderProps> = ({ siteTitle, siteLogoUrl })
     );
 };
 
-export default GlobalHeader;
+export default Header;

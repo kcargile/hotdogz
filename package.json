@@ -2,6 +2,12 @@
     "name": "doggiedating",
     "version": "0.1.0",
     "private": true,
+    "author": {
+        "name": "Kristopher Cargile",
+        "email": "team@algorythimc.com"
+    },
+    "homepage": "https://github.com/kcargile/hotdogz#readme",
+    "license": "MIT",
     "prettier": "@openendurance/prettier-config",
     "eslintConfig": {
         "root": true,
@@ -11,11 +17,15 @@
         "node": ">=17.0.0"
     },
     "scripts": {
-        "dev": "next dev",
         "build": "next build",
-        "start": "next start",
+        "codegen": "graphql-codegen --require dotenv/config --config codegen.ts dotenv_config_path=.env.local",
+        "dev": "next dev",
+        "format": "yarn prettier",
         "lint": "next lint",
-        "format": "yarn prettier"
+        "prebuild": "yarn codegen",
+        "predev": "yarn codegen",
+        "prestart": "yarn codegen",
+        "start": "next start"
     },
     "dependencies": {
         "@apollo/client": "^3.7.1",
@@ -35,14 +45,19 @@
         "react-dom": "18.2.0"
     },
     "devDependencies": {
+        "@graphql-codegen/cli": "2.13.8",
+        "@graphql-codegen/client-preset": "1.1.1",
+        "@graphql-codegen/introspection": "2.2.1",
+        "@graphql-codegen/typescript": "^2.8.0",
+        "@graphql-codegen/typescript-operations": "^2.5.5",
         "@openendurance/eslint-config": "^2.1.3",
         "@openendurance/prettier-config": "^2.1.3",
         "@types/node": "18.11.6",
         "@types/react": "18.0.23",
         "@types/react-dom": "18.0.7",
+        "dotenv": "^16.0.3",
         "eslint": "8.26.0",
         "eslint-config-next": "13.0.0",
-        "mini-css-extract-plugin": "^2.6.1",
         "prettier": "^2.7.1",
         "typescript": "4.8.4"
     }

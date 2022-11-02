@@ -1,0 +1,4 @@
+fragment EntrySystemFields on EntrySystemField {
+    created_at
+    uid
+}
