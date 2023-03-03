@@ -1,5 +1,5 @@
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
-import { Seo } from "@core/graphql/__generated__/graphql";
+import { Seo } from "@core/Seo";
 import { PAGE_FALLBACK_TITLE, SITE_FALLBACK_TITLE } from "@theme/Constants";
 import Head from "next/head";
 import { FC, ReactNode, useContext } from "react";
