@@ -1,5 +1,0 @@
-query FetchGlobalSettings {
-    all_global_settings {
-        ...GlobalSettingsFields
-    }
-}
