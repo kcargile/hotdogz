@@ -1,6 +1,7 @@
 import DogSummaryCard from "@components/dog/DogSummaryCard";
 import HtmlHead from "@components/html/HtmlHead";
 import MainContent from "@components/layout/MainContent";
+import { NavigationItem } from "@components/layout/Navigation";
 import { jsonToHTML } from "@contentstack/utils";
 import { GlobalSettings } from "@context/GlobalSettings";
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
@@ -30,6 +31,9 @@ export default function Index({ page, settings }: IndexProps) {
             context.updateSettings(settings);
         }
     }, [context, settings]);
+
+    console.log("page");
+    console.log(page.header[0].primary_navigation[0]);
 
     return (
         <>
@@ -80,7 +84,7 @@ export const getServerSideProps: GetServerSideProps<IndexProps> = async (context
     const pq = cs.ContentType("page").Query();
     const pr = await pq
         .where("url", context.resolvedUrl)
-        .includeReference(["featured_content", "header", "main_content"])
+        .includeReference(["featured_content", "header.primary_navigation", "main_content"])
         .includeEmbeddedItems()
         .includeCount()
         .toJSON()
@@ -100,6 +104,10 @@ export const getServerSideProps: GetServerSideProps<IndexProps> = async (context
 
     const page = pr[0][0];
     const settings = sr[0][0];
+    const headerNav = new Array<NavigationItem>();
+    page.header[0].primary_navigation[0].items.map((i: any) => {
+        headerNav.push({ title: i.target_external.title || "", href: i.target_external.href || "#" });
+    });
 
     return {
         props: {
@@ -108,6 +116,7 @@ export const getServerSideProps: GetServerSideProps<IndexProps> = async (context
                 copyright: settings.copyright,
                 fallbackMysteryImageUrl: settings.default_dog_image.url,
                 faviconUrl: settings.favicon.url,
+                headerNavItems: headerNav,
                 siteTitle: settings.site_title,
                 siteLogoUrl: settings.logo.url
             } as GlobalSettings,

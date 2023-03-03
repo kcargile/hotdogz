@@ -1,4 +1,4 @@
-import Navigation from "@components/layout/Navigation";
+import { Navigation, NavigationItem } from "@components/layout/Navigation";
 import PetsIcon from "@mui/icons-material/Pets";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import { Tooltip } from "@mui/material";
@@ -10,11 +10,12 @@ import Typography from "@mui/material/Typography";
 import { FC } from "react";
 
 interface HeaderProps {
+    headerNavItems: NavigationItem[];
     siteTitle: string;
     siteLogoUrl?: string;
 }
 
-export const Header: FC<HeaderProps> = ({ siteTitle, siteLogoUrl }) => {
+export const Header: FC<HeaderProps> = ({ headerNavItems, siteTitle, siteLogoUrl }) => {
     const theme = useTheme();
 
     return (
@@ -24,7 +25,7 @@ export const Header: FC<HeaderProps> = ({ siteTitle, siteLogoUrl }) => {
                 <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                     {siteTitle}
                 </Typography>
-                <Navigation />
+                <Navigation items={headerNavItems} />
                 <Avatar sx={{ marginLeft: 2 }}>
                     <Tooltip title="Not logged in.">
                         <PetsIcon />

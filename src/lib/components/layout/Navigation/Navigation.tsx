@@ -2,19 +2,24 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import { FC } from "react";
 
-// TODO: wire this up to CMS data
+interface NavigationProps {
+    items?: Array<NavigationItem>;
+}
 
-interface NavigationProps {}
+export interface NavigationItem {
+    title: string;
+    href: string;
+}
 
-export const Navigation: FC<NavigationProps> = () => {
-    const navItems = ["FAQ", "Login"];
+export const Navigation: FC<NavigationProps> = ({ items }) => {
     return (
         <List>
-            {navItems.map((i) => (
-                <Button color="inherit" key={i}>
-                    {i}
-                </Button>
-            ))}
+            {items &&
+                items.map((i) => (
+                    <Button color="inherit" key={i.title} href={i.href}>
+                        {i.title}
+                    </Button>
+                ))}
         </List>
     );
 };

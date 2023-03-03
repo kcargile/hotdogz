@@ -12,10 +12,12 @@ interface RootLayoutProps {
 }
 
 export const Root: FC<RootLayoutProps> = ({ children }) => {
-    const { attribution, copyright, siteTitle, siteLogoUrl } = useContext(GlobalSettingsContext).settings;
+    const { attribution, copyright, headerNavItems, siteTitle, siteLogoUrl } =
+        useContext(GlobalSettingsContext).settings;
+
     return (
         <ThemeProvider theme={theme}>
-            <Header siteTitle={siteTitle} siteLogoUrl={siteLogoUrl} />
+            <Header headerNavItems={headerNavItems} siteTitle={siteTitle} siteLogoUrl={siteLogoUrl} />
             {children}
             <Footer attribution={attribution} copyright={copyright} />
         </ThemeProvider>
