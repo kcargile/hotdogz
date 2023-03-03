@@ -1,9 +1,8 @@
 import DogSummaryCard from "@components/dog/DogSummaryCard";
 import HtmlHead from "@components/html/HtmlHead";
 import MainContent from "@components/layout/MainContent";
-import { NavigationItem } from "@components/layout/Navigation";
 import { jsonToHTML } from "@contentstack/utils";
-import { GlobalSettings } from "@context/GlobalSettings";
+import { fromContentType, GlobalSettings } from "@context/GlobalSettings";
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
 import { ContentStackClient } from "@core/cs/ContentStackClient";
 import Container from "@mui/material/Container";
@@ -77,46 +76,17 @@ export default function Index({ page, settings }: IndexProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<IndexProps> = async (context) => {
-    const cs = new ContentStackClient().Client;
-    const pq = cs.ContentType("page").Query();
-    const pr = await pq
-        .where("url", context.resolvedUrl)
-        .includeReference(["featured_content", "header.primary_navigation", "main_content"])
-        .includeEmbeddedItems()
-        .includeCount()
-        .toJSON()
-        .find();
-    if (pr[0] && pr[0].length !== 1) {
-        // there should be exactly one homepage
-        throw new Error("Doggonnit, some kat jacked up this page. Sick em!! 🐕");
-    }
-
-    // fetch global settings
-    const sq = await cs.ContentType("global_settings").Query();
-    const sr = await sq.includeCount().toJSON().find();
-    if (sr[0] && sr[0].length !== 1) {
-        // there should be exactly one settings entry
-        throw new Error("Kat got into the settings.");
-    }
-
-    const page = pr[0][0];
-    const settings = sr[0][0];
-    const headerNav = new Array<NavigationItem>();
-    page.header[0].primary_navigation[0].items.map((i: any) => {
-        headerNav.push({ title: i.target_external.title || "", href: i.target_external.href || "#" });
-    });
+    const cs = new ContentStackClient();
+    const settings = await cs.fetchGlobalSettings();
+    const page = await cs.fetchPage(context.resolvedUrl, [
+        "featured_content",
+        "header.primary_navigation",
+        "main_content"
+    ]);
 
     return {
         props: {
-            settings: {
-                attribution: settings.attribution,
-                copyright: settings.copyright,
-                fallbackMysteryImageUrl: settings.default_dog_image.url,
-                faviconUrl: settings.favicon.url,
-                headerNavItems: headerNav,
-                siteTitle: settings.site_title,
-                siteLogoUrl: settings.logo.url
-            } as GlobalSettings,
+            settings: fromContentType(page, settings),
             page
         }
     };
