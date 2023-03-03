@@ -23,6 +23,7 @@
     "dependencies": {
         "@babel/core": "^7.0.0",
         "@contentstack/cli": "^1.1.0",
+        "@contentstack/utils": "^1.2.0",
         "@emotion/react": "^11.10.4",
         "@emotion/styled": "^11.10.4",
         "@fontsource/roboto": "^4.5.8",

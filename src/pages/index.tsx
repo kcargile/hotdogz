@@ -1,6 +1,7 @@
 import DogSummaryCard from "@components/dog/DogSummaryCard";
 import HtmlHead from "@components/html/HtmlHead";
 import MainContent from "@components/layout/MainContent";
+import { jsonToHTML } from "@contentstack/utils";
 import { GlobalSettings } from "@context/GlobalSettings";
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
 import { ContentStackClient } from "@core/cs/ContentStackClient";
@@ -12,10 +13,6 @@ import React, { useContext, useEffect } from "react";
 
 // TODO: fix breakpoint issues in grid
 
-// TODO: 1. Fix global settings query
-// TODO: 2. Fix main content render settings query
-// TODO: 4. Prune manual GQL shit
-
 interface IndexProps {
     page: any;
     settings?: GlobalSettings;
@@ -24,10 +21,9 @@ interface IndexProps {
 export default function Index({ page, settings }: IndexProps) {
     const context = useContext(GlobalSettingsContext);
     const dogs = page.featured_content;
-    const main = page.main_content;
 
-    console.log("settings");
-    console.log(settings);
+    const mainContent = page.main_content;
+    jsonToHTML({ entry: mainContent, paths: ["main_copy.item"] });
 
     useEffect(() => {
         if (context.updateSettings) {
@@ -43,14 +39,20 @@ export default function Index({ page, settings }: IndexProps) {
                     <Grid xs={12} sm={12}>
                         <Item>
                             <MainContent title={page.title || PAGE_FALLBACK_TITLE}>
-                                {/* console.log(page.main_content[0].main_copy.item); */}
-                                {/* {mainContent && (
-                                    <span
+                                {mainContent[0] && (
+                                    <div
                                         dangerouslySetInnerHTML={{
-                                            __html: `<${mainContent.mainCopy?.tag}>${mainCopy.content}</${mainCopy.tag}>`
+                                            __html: `<p>${mainContent[0].main_copy.title}</p>`
                                         }}
                                     />
-                                )} */}
+                                )}
+                                {mainContent[0] && (
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: `${mainContent[0].main_copy.item}`
+                                        }}
+                                    />
+                                )}
                             </MainContent>
                         </Item>
                     </Grid>
@@ -73,46 +75,42 @@ export default function Index({ page, settings }: IndexProps) {
     );
 }
 
-// export const getServerSideProps: GetServerSideProps<IndexProps> = async (context) => {
-//     const { data } = await new GraphQLClient().Client.query<FetchPageQuery, FetchPageQueryVariables>({
-//         query: FetchPageDocument,
-//         variables: { url: context.resolvedUrl }
-//     });
-
-//     const settings: AllGlobalSettings | undefined = data?.all_global_settings || undefined;
-//     return {
-//         props: {
-//             settings: GraphQLClient.fromGqlSettings(settings?.items?.[0] as GlobalSettings),
-//             page: data?.all_page?.items?.[0] || undefined
-//         }
-//     };
-// };
-
 export const getServerSideProps: GetServerSideProps<IndexProps> = async (context) => {
     const cs = new ContentStackClient().Client;
-    const query = cs.ContentType("page").Query();
-    const result = await query
+    const pq = cs.ContentType("page").Query();
+    const pr = await pq
         .where("url", context.resolvedUrl)
         .includeReference(["featured_content", "main_content"])
+        .includeEmbeddedItems()
         .includeCount()
         .toJSON()
         .find();
-
-    if (result[0] && result[0].length !== 1) {
-        // there should only be one homepage
+    if (pr[0] && pr[0].length !== 1) {
+        // there should be exactly one homepage
         throw new Error("Doggonnit, some kat jacked up this page. Sick em!! 🐕");
     }
 
-    const page = result[0][0];
-    const settings = page.global_field; // TODO: this is the wrong settings object
+    // fetch global settings
+    const sq = await cs.ContentType("global_settings").Query();
+    const sr = await sq.includeCount().toJSON().find();
+    if (sr[0] && sr[0].length !== 1) {
+        // there should be exactly one settings entry
+        throw new Error("Kat got into the settings.");
+    }
 
-    // console.log("result");
-    // console.log(page);
-    // console.log(settings);
+    const page = pr[0][0];
+    const settings = sr[0][0];
 
     return {
         props: {
-            settings,
+            settings: {
+                attribution: settings.attribution,
+                copyright: settings.copyright,
+                fallbackMysteryImageUrl: settings.default_dog_image.url,
+                faviconUrl: settings.favicon.url,
+                siteTitle: settings.site_title,
+                siteLogoUrl: settings.logo.url
+            } as GlobalSettings,
             page
         }
     };
