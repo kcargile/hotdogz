@@ -7,15 +7,17 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "@theme/Theme";
 import { FC, ReactNode, useContext } from "react";
 
-interface IRootLayoutProps {
+interface RootLayoutProps {
     children?: ReactNode;
 }
 
-export const Root: FC<IRootLayoutProps> = ({ children }) => {
-    const { attribution, copyright, siteTitle, siteLogoUrl } = useContext(GlobalSettingsContext).settings;
+export const Root: FC<RootLayoutProps> = ({ children }) => {
+    const { attribution, copyright, headerNavItems, siteTitle, siteLogoUrl } =
+        useContext(GlobalSettingsContext).settings;
+
     return (
         <ThemeProvider theme={theme}>
-            <Header siteTitle={siteTitle} siteLogoUrl={siteLogoUrl} />
+            <Header headerNavItems={headerNavItems} siteTitle={siteTitle} siteLogoUrl={siteLogoUrl} />
             {children}
             <Footer attribution={attribution} copyright={copyright} />
         </ThemeProvider>

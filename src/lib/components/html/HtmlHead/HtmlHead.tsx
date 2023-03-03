@@ -1,17 +1,17 @@
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
-import { Seo } from "@core/graphql/__generated__/graphql";
+import { Seo } from "@core/Seo";
 import { PAGE_FALLBACK_TITLE, SITE_FALLBACK_TITLE } from "@theme/Constants";
 import Head from "next/head";
 import { FC, ReactNode, useContext } from "react";
 
-interface IHtmlHeadProps {
+interface HtmlHeadProps {
     children?: ReactNode;
     gsup?: boolean;
     meta?: Seo;
     title?: string;
 }
 
-export const HtmlHead: FC<IHtmlHeadProps> = ({ children, gsup, meta, title }) => {
+export const HtmlHead: FC<HtmlHeadProps> = ({ children, gsup, meta, title }) => {
     const { siteTitle } = useContext(GlobalSettingsContext).settings;
     return (
         <Head>

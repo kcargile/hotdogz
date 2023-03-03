@@ -4,13 +4,13 @@ import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { FC, ReactNode, useContext, useEffect, useState } from "react";
 
-interface IFooterProps {
+interface FooterProps {
     attribution: string;
     children?: ReactNode[];
     copyright: string;
 }
 
-export const Footer: FC<IFooterProps> = ({ attribution, children, copyright }) => {
+export const Footer: FC<FooterProps> = ({ attribution, children, copyright }) => {
     const theme = useTheme();
     const [visible, setVisible] = useState(true);
     const { hideFooter } = useContext(GlobalSettingsContext).settings;

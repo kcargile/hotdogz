@@ -1,5 +1,4 @@
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
-import { Dog } from "@core/graphql/__generated__/graphql";
 import { tryCalculateAge } from "@core/util/DateTimeUtil";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
@@ -26,18 +25,18 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import { FC, useContext } from "react";
 
-interface IDogSummaryCardProps {
-    dog: Dog;
+interface DogSummaryCardProps {
+    dog: any;
 }
 
-export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
+export const DogSummaryCard: FC<DogSummaryCardProps> = ({ dog }) => {
     const theme = useTheme();
     const { fallbackMysteryImageUrl } = useContext(GlobalSettingsContext).settings;
 
     const vaxed = dog.vax_status === "Vaccinated";
     const chips: JSX.Element[] = [];
     dog.seeking &&
-        dog.seeking.map((i) => {
+        dog.seeking.map((i: any) => {
             chips.push(
                 <Chip
                     icon={<VisibilityIcon fontSize="small" />}
@@ -50,7 +49,7 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
         });
 
     dog.likes &&
-        dog.likes.map((i) => {
+        dog.likes.map((i: any) => {
             chips.push(
                 <Chip
                     icon={<CheckRoundedIcon fontSize="small" />}
@@ -62,7 +61,7 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
             );
         });
     dog.dislikes &&
-        dog.dislikes.map((i) => {
+        dog.dislikes.map((i: any) => {
             chips.push(
                 <Chip
                     icon={<NotInterestedIcon fontSize="small" />}
@@ -74,9 +73,7 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
             );
         });
 
-    const photo = dog.photoConnection?.edges?.[0]?.node || undefined;
-    const width = (photo && photo.dimension?.width) || 0;
-    const height = (photo && photo.dimension?.height) || 0;
+    const photo = dog.photo || undefined;
     const url = (photo && photo.url) || fallbackMysteryImageUrl;
     const color = dog.favorite_color?.toLowerCase() || undefined;
 
@@ -88,8 +85,8 @@ export const DogSummaryCard: FC<IDogSummaryCardProps> = ({ dog }) => {
                         <CardMedia
                             sx={{
                                 position: "relative",
-                                width: width / 2,
-                                height: height / 2
+                                width: 378,
+                                height: 504
                             }}
                         >
                             <Image
