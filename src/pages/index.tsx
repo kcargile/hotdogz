@@ -80,7 +80,7 @@ export const getServerSideProps: GetServerSideProps<IndexProps> = async (context
     const pq = cs.ContentType("page").Query();
     const pr = await pq
         .where("url", context.resolvedUrl)
-        .includeReference(["featured_content", "main_content"])
+        .includeReference(["featured_content", "header", "main_content"])
         .includeEmbeddedItems()
         .includeCount()
         .toJSON()
