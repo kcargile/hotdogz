@@ -32,9 +32,6 @@ export default function Index({ page, settings }: IndexProps) {
         }
     }, [context, settings]);
 
-    console.log("page");
-    console.log(page.header[0].primary_navigation[0]);
-
     return (
         <>
             <HtmlHead title={page.title || PAGE_FALLBACK_TITLE} meta={page.global_field || undefined} />
