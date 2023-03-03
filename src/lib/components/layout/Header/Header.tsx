@@ -1,6 +1,7 @@
 import Navigation from "@components/layout/Navigation";
 import PetsIcon from "@mui/icons-material/Pets";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
+import { Tooltip } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import { useTheme } from "@mui/material/styles";
@@ -8,12 +9,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { FC } from "react";
 
-interface IHeaderProps {
+interface HeaderProps {
     siteTitle: string;
     siteLogoUrl?: string;
 }
 
-export const Header: FC<IHeaderProps> = ({ siteTitle, siteLogoUrl }) => {
+export const Header: FC<HeaderProps> = ({ siteTitle, siteLogoUrl }) => {
     const theme = useTheme();
 
     return (
@@ -25,7 +26,9 @@ export const Header: FC<IHeaderProps> = ({ siteTitle, siteLogoUrl }) => {
                 </Typography>
                 <Navigation />
                 <Avatar sx={{ marginLeft: 2 }}>
-                    <PetsIcon />
+                    <Tooltip title="Not logged in.">
+                        <PetsIcon />
+                    </Tooltip>
                 </Avatar>
             </Toolbar>
         </AppBar>

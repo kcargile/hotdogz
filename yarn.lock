@@ -819,6 +819,11 @@
   dependencies:
     node-html-parser "^5.4.1"
 
+"@contentstack/utils@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@contentstack/utils/-/utils-1.2.0.tgz#b551257ce0fb2a1b74fb8f527e927244df36808b"
+  integrity sha512-K8LHm4No5uk5wDwGG34cTr+SJt4KZg2+0t/MPF+rQhfOQJ4jSzeY01HkfiPziKaz2njht1C4Uk3mWGSmfb8gtw==
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"
@@ -2982,6 +2987,17 @@ contentstack@^3.10.1:
     es6-promise "^4.1.1"
     isomorphic-fetch "^3.0.0"
     localStorage "1.0.4"
+
+contentstack@^3.16.1:
+  version "3.16.1"
+  resolved "https://registry.yarnpkg.com/contentstack/-/contentstack-3.16.1.tgz#6a482ceff967e63c3c78042b38d00e03b0ed41ac"
+  integrity sha512-rsE4pSAHvW8SpHlyptrHat6QnRMmrN2elnI07vDwM1p0qGHzhcEhZ3Z4xF1cR8UGtbmyqujaKGRxd0hOLvh2UA==
+  dependencies:
+    "@contentstack/utils" "^1.2.0"
+    es6-promise "^4.1.1"
+    isomorphic-fetch "^3.0.0"
+    localStorage "1.0.4"
+    qs "^6.11.0"
 
 convert-source-map@^1.5.0, convert-source-map@^1.7.0:
   version "1.9.0"
@@ -6029,7 +6045,7 @@ pvutils@^1.1.3:
   resolved "https://registry.yarnpkg.com/pvutils/-/pvutils-1.1.3.tgz#f35fc1d27e7cd3dfbd39c0826d173e806a03f5a3"
   integrity sha512-pMpnA0qRdFp32b1sJl1wOJNxZLQ2cbQx+k6tjNtZ8CpvVhNqEPRgivZ2WOUev2YMajecdH7ctUPDvEe87nariQ==
 
-qs@^6.10.3:
+qs@^6.10.3, qs@^6.11.0:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.11.0.tgz#fd0d963446f7a65e1367e01abd85429453f0c37a"
   integrity sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==

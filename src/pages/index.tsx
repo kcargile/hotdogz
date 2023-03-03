@@ -3,35 +3,27 @@ import HtmlHead from "@components/html/HtmlHead";
 import MainContent from "@components/layout/MainContent";
 import { GlobalSettings } from "@context/GlobalSettings";
 import { GlobalSettingsContext } from "@context/GlobalSettingsContext";
-import { GraphQLClient } from "@core/graphql/GraphQLClient";
-import {
-    AllGlobalSettings,
-    Dog,
-    FetchPageDocument,
-    FetchPageQuery,
-    FetchPageQueryVariables,
-    Page
-} from "@core/graphql/__generated__/graphql";
 import Container from "@mui/material/Container";
 import { default as Grid, default as Item } from "@mui/material/Unstable_Grid2";
 import { PAGE_FALLBACK_TITLE } from "@theme/Constants";
+import contentstack from "contentstack";
 import { GetServerSideProps } from "next";
 import React, { useContext, useEffect } from "react";
 
 // TODO: fix breakpoint issues in grid
 
-interface IIndexProps {
-    page?: Page;
+interface IndexProps {
+    page: any;
     settings?: GlobalSettings;
 }
 
-export default function Index({ page, settings }: IIndexProps) {
+export default function Index({ page, settings }: IndexProps) {
     const context = useContext(GlobalSettingsContext);
-    const dogEdges = page?.featured_contentConnection?.edges || [];
-    const dogs = dogEdges.flatMap((e) => {
-        if (!e?.node || e?.node.__typename !== "Dog") return [];
-        return e.node as Dog;
-    });
+    const dogs = page.featured_content;
+    const main = page.main_content;
+
+    console.log("settings");
+    console.log(settings);
 
     useEffect(() => {
         if (context.updateSettings) {
@@ -41,12 +33,13 @@ export default function Index({ page, settings }: IIndexProps) {
 
     return (
         <>
-            <HtmlHead title={page?.title || PAGE_FALLBACK_TITLE} meta={page?.global_field || undefined} />
+            <HtmlHead title={page.title || PAGE_FALLBACK_TITLE} meta={page.global_field || undefined} />
             <Container sx={{ marginTop: 5 }}>
                 <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                     <Grid xs={12} sm={12}>
                         <Item>
-                            <MainContent title={page?.title || PAGE_FALLBACK_TITLE}>
+                            <MainContent title={page.title || PAGE_FALLBACK_TITLE}>
+                                {/* console.log(page.main_content[0].main_copy.item); */}
                                 {/* {mainContent && (
                                     <span
                                         dangerouslySetInnerHTML={{
@@ -58,8 +51,8 @@ export default function Index({ page, settings }: IIndexProps) {
                         </Item>
                     </Grid>
                     {dogs &&
-                        dogs.map((i: Dog) => {
-                            const uid = i.system!.uid;
+                        dogs.map((i: any) => {
+                            const uid = i.uid;
                             return (
                                 <React.Fragment key={uid}>
                                     <Grid xs={4} sm={4} key={`g-${uid}`}>
@@ -76,17 +69,52 @@ export default function Index({ page, settings }: IIndexProps) {
     );
 }
 
-export const getServerSideProps: GetServerSideProps<IIndexProps> = async (context) => {
-    const { data } = await new GraphQLClient().Client.query<FetchPageQuery, FetchPageQueryVariables>({
-        query: FetchPageDocument,
-        variables: { url: context.resolvedUrl }
+// export const getServerSideProps: GetServerSideProps<IndexProps> = async (context) => {
+//     const { data } = await new GraphQLClient().Client.query<FetchPageQuery, FetchPageQueryVariables>({
+//         query: FetchPageDocument,
+//         variables: { url: context.resolvedUrl }
+//     });
+
+//     const settings: AllGlobalSettings | undefined = data?.all_global_settings || undefined;
+//     return {
+//         props: {
+//             settings: GraphQLClient.fromGqlSettings(settings?.items?.[0] as GlobalSettings),
+//             page: data?.all_page?.items?.[0] || undefined
+//         }
+//     };
+// };
+
+export const getServerSideProps: GetServerSideProps<IndexProps> = async (context) => {
+    const stack = contentstack.Stack({
+        api_key: process.env.CONTENTSTACK_API_KEY!,
+        delivery_token: process.env.CONTENTSTACK_DELIVERY_TOKEN!,
+        environment: process.env.CONTENTSTACK_ENVIRONMENT!
     });
 
-    const settings: AllGlobalSettings | undefined = data?.all_global_settings || undefined;
+    const query = stack.ContentType("page").Query();
+    const result = await query
+        .where("url", context.resolvedUrl)
+        .includeReference(["featured_content", "main_content"])
+        .includeCount()
+        .toJSON()
+        .find();
+
+    if (result.length !== 1 || result[0].length !== 1) {
+        // there should only be one homepage
+        throw new Error("Doggonnit! Some kat has jacked up this page. Sick em!!");
+    }
+
+    const page = result[0][0];
+    const settings = page.global_field; // TODO: this is the wrong settings object
+
+    // console.log("result");
+    // console.log(page);
+    // console.log(settings);
+
     return {
         props: {
-            settings: GraphQLClient.fromGqlSettings(settings?.items?.[0] as GlobalSettings),
-            page: data?.all_page?.items?.[0] || undefined
+            settings,
+            page
         }
     };
 };

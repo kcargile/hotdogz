@@ -1,6 +1,6 @@
 import { GlobalSettings } from "./GlobalSettings";
 
-export interface IGlobalSettingsContext {
+export interface GlobalSettingsContext {
     settings: GlobalSettings;
     updateSettings?: (s?: GlobalSettings) => void;
 }

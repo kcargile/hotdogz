@@ -5,12 +5,12 @@ import Container from "@mui/material/Container";
 import Image from "next/image";
 import { FC, ReactNode, useContext, useEffect } from "react";
 
-interface ILoadingProps {
+interface LoadingProps {
     children?: ReactNode;
     loading: boolean;
 }
 
-export const Loading: FC<ILoadingProps> = ({ children, loading }) => {
+export const Loading: FC<LoadingProps> = ({ children, loading }) => {
     const context = useContext(GlobalSettingsContext);
     useEffect(() => {
         context.settings.hideFooter = true;
